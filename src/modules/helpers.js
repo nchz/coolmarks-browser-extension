@@ -43,6 +43,15 @@ function getRand() {
   return Math.random().toString().slice(2, 6)
 }
 
+function updateActionBadge(tab, linkDetails) {
+  if (linkDetails) {
+    // TODO add setBang when `linkDetails` don't match tab details.
+    setOk(tab.id)
+  } else {
+    setAdd(tab.id)
+  }
+}
+
 export {
   setWait,
   setAdd,
@@ -51,4 +60,5 @@ export {
   setBang,
   setQuestion,
   setRand,
+  updateActionBadge,
 }

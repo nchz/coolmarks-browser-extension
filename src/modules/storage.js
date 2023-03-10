@@ -1,5 +1,5 @@
 import { checkLink } from "./core.js"
-import { setAdd, setOk, setError, setBang, setQuestion } from "./helpers.js"
+import { updateActionBadge } from "./helpers.js"
 
 
 function getTabKey(tab) {
@@ -11,15 +11,11 @@ function getTabKey(tab) {
 }
 
 async function saveTabDetails(tab) {
+  // TODO Avoid fetching many times the same info due to this Chrome issue:
+  // https://groups.google.com/a/chromium.org/g/chromium-extensions/c/0l5j8gZqatk
   const { url, title, favIconUrl } = tab
   const [linkDetails] = await checkLink(url)
-  // Update action badge.
-  if (linkDetails) {
-    // TODO add setBang when linkDetails don't match tab details.
-    setOk(tab.id)
-  } else {
-    setAdd(tab.id)
-  }
+  updateActionBadge(tab, linkDetails)
   console.log("saveTabDetails", [tab.id, linkDetails])
   chrome.storage.local.set({
     [getTabKey(tab)]: {
