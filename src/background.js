@@ -1,6 +1,5 @@
-import { addLink, deleteLink, getStatus } from "./modules/core.js"
-import { saveTabDetails, loadTabDetails, removeTabDetails, printAllKeys } from "./modules/storage.js"
-import { setWait, setError } from "./modules/helpers.js"
+import { saveTabDetails, removeTabDetails, printAllKeys } from "./modules/storage.js"
+import { setWait } from "./modules/helpers.js"
 
 
 async function main() {
@@ -10,6 +9,8 @@ async function main() {
   chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
     // `info` contains the attributes of `tab` that have changed, with their new values.
     if (info.status == "complete") {
+      // This may fire many times:
+      // https://groups.google.com/a/chromium.org/g/chromium-extensions/c/0l5j8gZqatk
       await saveTabDetails(tab)
     } else if (info.status == "loading") {
       // Redirects not yet applied?
@@ -19,33 +20,6 @@ async function main() {
 
   chrome.tabs.onRemoved.addListener(async (tabId, info) => {
     await removeTabDetails(tabId)
-  })
-
-  // Handle click action.
-
-  chrome.action.onClicked.addListener(async tab => {
-    setWait(tab.id)
-    const tabDetails = await loadTabDetails(tab)
-    if (tabDetails) {
-      const { linkDetails, url, title, favIconUrl } = tabDetails
-      // Either add or delete current tab.
-      if (linkDetails) {
-        await deleteLink(linkDetails.id).catch(error => {
-          setError(tab.id)
-          throw error
-        })
-      } else {
-        await addLink(url, title, favIconUrl).catch(error => {
-          setError(tab.id)
-          throw error
-        })
-      }
-      // Update local storage.
-      await saveTabDetails(tab)
-    } else {
-      // If action click comes before checking tab, just check it.
-      await saveTabDetails(tab)
-    }
   })
 }
 

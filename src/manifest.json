@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Coolmarks 2",
+  "name": "Coolmarks",
   "description": "Coolmarks web extension",
   "version": "0.1",
   "permissions": [
@@ -9,6 +9,7 @@
     "tabs"
   ],
   "action": {
+    "default_popup": "popup.html"
   },
   "background": {
     "service_worker": "background.js",

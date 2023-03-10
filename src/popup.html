@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" href="https://bootswatch.com/5/darkly/bootstrap.min.css" media="(prefers-color-scheme: dark)">
+</head>
+
+<body class="container m-2" style="width: 280px;">
+  <div id="error-message" class="d-none row m-1 fs-6 alert alert-warning" role="alert">
+    The following errors occurred:
+    <ul id="error-list"></ul>
+  </div>
+  <div class="row">
+    <button id="add-link" class="col m-2 btn btn-success">Add Link</button>
+    <button id="delete-link" class="d-none col m-2 btn btn-danger">Delete Link</button>
+  </div>
+  <div class="row">
+    <span class="col-2">Tags:</span>
+    <input id="add-tag" autoFocus class="col m-2 form-control" placeholder="Add a tag and press Enter">
+  </div>
+  <div id="tag-list" class="m-2">
+    <!-- <span style="font-size: 0;">;</span> -->
+    <span class="-tag badge rounded-pill bg-primary">tag-test</span>
+    <span class="-tag badge rounded-pill bg-primary">another-tag</span>
+  </div>
+  <div class="row mt-4">
+    <a id="open-dashboard" target="_blank" class="col m-2 btn btn-primary">Open Dashboard</a>
+  </div>
+  <script type="module" src="popup.js"></script>
+</body>
+
+</html>
