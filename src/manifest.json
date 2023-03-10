@@ -2,11 +2,13 @@
   "manifest_version": 3,
   "name": "Coolmarks",
   "description": "Coolmarks web extension",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "icons": {
     "48": "images/coolmarks.png"
   },
-  "action": {},
+  "action": {
+    "default_popup": "popup.html"
+  },
   "background": {
     "service_worker": "background.js",
     "type": "module"

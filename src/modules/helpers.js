@@ -43,6 +43,25 @@ function getRand() {
   return Math.random().toString().slice(2, 6)
 }
 
+function updateActionBadge(tab, linkDetails) {
+  if (linkDetails) {
+    // TODO add setBang when `linkDetails` don't match tab details.
+    setOk(tab.id)
+  } else {
+    setAdd(tab.id)
+  }
+}
+
+function cleanTag(tag) {
+  // NOTE: Keep consistent with backend!
+  tag = tag.replace(/[\s|\-|_]+/g, "_")
+  tag = tag.replace(/\W/g, "")
+  tag = tag.replace(/_+/g, "_")
+  tag = tag.replace(/^_+|_+$/g, "")
+  tag = tag.replace(/_/g, "-").toLowerCase()
+  return tag
+}
+
 export {
   setWait,
   setAdd,
@@ -51,4 +70,6 @@ export {
   setBang,
   setQuestion,
   setRand,
+  updateActionBadge,
+  cleanTag,
 }

@@ -68,13 +68,12 @@ function checkLink(url) {
   })
 }
 
-function addLink(url, title, favIconUrl) {
+function addLink(url, title, favIconUrl, tags) {
   return api(actions.ADD, {
     location: url,
     title: title,
-    // TODO
     // favIconUrl: favIconUrl,
-    tags: [],
+    tags: tags,
   })
 }
 
