@@ -9,7 +9,7 @@ var tab, tabDetails
 
 const buttonAddLink = document.getElementById("add-link")
 const buttonDeleteLink = document.getElementById("delete-link")
-const tagList = document.getElementById("tag-list")
+const divTagList = document.getElementById("tag-list")
 const errorList = document.getElementById("error-list")
 
 // Read tab (just once) when popup is opened.
@@ -57,16 +57,16 @@ function handleError(error) {
 }
 
 buttonAddLink.addEventListener("click", async () => {
-  const tags = []
-  for (const tag of tagList.children) {
-    tags.push(tag.innerHTML)
+  const tagList = []
+  for (const tag of divTagList.children) {
+    tagList.push(tag.innerHTML)
   }
   // TODO Persist session tags.
   // TODO Allow "extra tags".
 
   const { url, title, favIconUrl } = tabDetails
   setWait(tab.id)
-  await addLink(url, title, favIconUrl, tags).then(handleOk).catch(handleError)
+  await addLink(url, title, favIconUrl, tagList).then(handleOk).catch(handleError)
 })
 
 buttonDeleteLink.addEventListener("click", async () => {
@@ -84,7 +84,7 @@ document.getElementById("add-tag").addEventListener("change", function () {
     tagElem.setAttribute("class", "badge rounded-pill bg-primary")
     tagElem.addEventListener("click", function () { this.remove() })
     tagElem.innerHTML = tag
-    tagList.append(tagElem)
+    divTagList.append(tagElem)
   }
 })
 

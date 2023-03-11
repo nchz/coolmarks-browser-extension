@@ -29,6 +29,7 @@ async function getCsrfToken() {
     name: "csrftoken",
     url: await getBaseUrl(),
   }).then(cookie => cookie.value)
+  // TODO catch
 }
 
 async function api(action, data) {
@@ -68,12 +69,12 @@ function checkLink(url) {
   })
 }
 
-function addLink(url, title, favIconUrl, tags) {
+function addLink(url, title, favIconUrl, tagList) {
   return api(actions.ADD, {
     location: url,
     title: title,
     // favIconUrl: favIconUrl,
-    tags: tags,
+    tag_list: tagList,
   })
 }
 
