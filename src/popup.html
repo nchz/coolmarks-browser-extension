@@ -13,19 +13,24 @@
   </div>
   <div class="row">
     <button id="add-link" class="col m-2 btn btn-success">Add Link</button>
-    <button id="delete-link" class="d-none col m-2 btn btn-danger">Delete Link</button>
   </div>
   <div class="row">
-    <span class="col-2">Tags:</span>
+    <button id="delete-link" class="d-none col m-2 btn btn-danger">Delete Link</button>
+    <span class="small"></span>
+  </div>
+  <div class="row">
+    <button id="update-tags" class="d-none col m-2 btn btn-success">Update Tags</button>
+  </div>
+  <div class="row">
     <input id="add-tag" autoFocus class="col m-2 form-control" placeholder="Add a tag and press Enter">
   </div>
+  <div class="row">
+    <span class="m-1"><span id="tag-count"></span> Tags:</span>
+  </div>
   <div id="tag-list" class="m-2">
-    <!-- <span style="font-size: 0;">;</span> -->
-    <span class="-tag badge rounded-pill bg-primary">tag-test</span>
-    <span class="-tag badge rounded-pill bg-primary">another-tag</span>
   </div>
   <div class="row mt-4">
-    <a id="open-dashboard" target="_blank" class="col m-2 btn btn-primary">Open Dashboard</a>
+    <a id="open-dashboard" target="_blank" class="col m-2 btn btn-info">Open Dashboard</a>
   </div>
   <script type="module" src="popup.js"></script>
 </body>

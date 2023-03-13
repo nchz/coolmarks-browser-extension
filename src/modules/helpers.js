@@ -52,7 +52,7 @@ function updateActionBadge(tab, linkDetails) {
   }
 }
 
-function cleanTag(tag) {
+function cleanTagName(tag) {
   // NOTE: Keep consistent with backend!
   tag = tag.replace(/[\s|\-|_]+/g, "_")
   tag = tag.replace(/\W/g, "")
@@ -71,5 +71,5 @@ export {
   setQuestion,
   setRand,
   updateActionBadge,
-  cleanTag,
+  cleanTagName,
 }

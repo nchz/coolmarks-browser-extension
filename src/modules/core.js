@@ -18,7 +18,7 @@ const actions = {
     url: "links/<id>/",
     method: "DELETE",
   },
-  EDIT: {
+  UPDATE: {
     url: "links/<id>/",
     method: "PATCH",
   },
@@ -28,7 +28,7 @@ async function getCsrfToken() {
   return chrome.cookies.get({
     name: "csrftoken",
     url: await getBaseUrl(),
-  }).then(cookie => cookie.value)
+  }).then(cookie => cookie?.value)
 }
 
 async function api(action, data) {
@@ -83,6 +83,13 @@ function deleteLink(linkId) {
   })
 }
 
+function updateTags(linkId, tags) {
+  return api(actions.UPDATE, {
+    id: linkId,
+    tags: tags,
+  })
+}
+
 async function getStatus() {
   const baseUrl = await getBaseUrl()
   return fetch(`${baseUrl}/status/`).then(r => r.json())
@@ -92,5 +99,6 @@ export {
   checkLink,
   addLink,
   deleteLink,
+  updateTags,
   getStatus,
 }
