@@ -1,6 +1,6 @@
 import { getBaseUrl } from "./settings.js"
 import { addLink, deleteLink, updateTags, getStatus } from "./modules/core.js"
-import { saveTabDetails, loadTabDetails } from "./modules/storage.js"
+import { saveTabDetails, loadTabDetails, saveSessionTags, loadSessionTags } from "./modules/storage.js"
 import { setWait, setError, cleanTagName } from "./modules/helpers.js"
 
 // TODO If !getStatus().authenticated then redirect to login.
@@ -42,6 +42,12 @@ chrome.tabs.query({
     buttonDeleteLink.nextElementSibling.innerHTML = `Added: ${addedString}`
     // Show saved tags.
     for (const tagName of linkDetails.tags) {
+      addTagElem(tagName)
+    }
+  } else {
+    // Show session tags.
+    const sessionTags = await loadSessionTags()
+    for (const tagName of sessionTags) {
       addTagElem(tagName)
     }
   }
@@ -108,7 +114,7 @@ function handleError(error) {
 buttonAddLink.addEventListener("click", async () => {
   const { url, title, favIconUrl } = tabDetails
   const tags = collectTags()
-  // TODO Persist session tags.
+  await saveSessionTags(tags)
   setWait(tab.id)
   await addLink(url, title, favIconUrl, tags).then(handleOk).catch(handleError)
 })
@@ -122,6 +128,7 @@ buttonDeleteLink.addEventListener("click", async () => {
 buttonUpdateTags.addEventListener("click", async () => {
   const { linkDetails } = tabDetails
   const tags = collectTags()
+  await saveSessionTags(tags)
   setWait(tab.id)
   await updateTags(linkDetails.id, tags).then(handleOk).catch(handleError)
 })

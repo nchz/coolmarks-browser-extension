@@ -17,7 +17,7 @@ async function saveTabDetails(tab) {
   const [linkDetails] = await checkLink(url)
   updateActionBadge(tab, linkDetails)
   console.log("saveTabDetails", [tab.id, linkDetails])
-  chrome.storage.local.set({
+  await chrome.storage.local.set({
     [getTabKey(tab)]: {
       linkDetails: linkDetails,
       url: url,
@@ -39,6 +39,17 @@ async function removeTabDetails(tabId) {
   console.log("removeTabDetails", tabId)
 }
 
+async function saveSessionTags(tags) {
+  await chrome.storage.local.set({
+    sessionTags: tags
+  })
+}
+
+async function loadSessionTags() {
+  const { sessionTags } = await chrome.storage.local.get("sessionTags")
+  return sessionTags || []
+}
+
 function printAllKeys() {
   // For debugging.
   chrome.storage.local.get(null).then(console.log)
@@ -48,5 +59,7 @@ export {
   saveTabDetails,
   loadTabDetails,
   removeTabDetails,
+  saveSessionTags,
+  loadSessionTags,
   printAllKeys,
 }
