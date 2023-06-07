@@ -50,9 +50,7 @@ class ApiClient {
   }
 
   checkLink(url) {
-    return this._call("POST", "links/check/", {
-      location: url,
-    })
+    return this._call("GET", `links/?location=${url}`)
   }
 
   listLinks() {
