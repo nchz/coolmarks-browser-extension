@@ -1,4 +1,4 @@
-import { checkLink } from "./core.js"
+import ApiClient from "./core.js"
 import { updateActionBadge } from "./helpers.js"
 
 
@@ -14,7 +14,7 @@ async function saveTabDetails(tab) {
   // TODO Avoid fetching many times the same info due to this Chrome issue:
   // https://groups.google.com/a/chromium.org/g/chromium-extensions/c/0l5j8gZqatk
   const { url, title, favIconUrl } = tab
-  const [linkDetails] = await checkLink(url)
+  const [linkDetails] = await ApiClient.create().then(client => client.checkLink(url))
   updateActionBadge(tab, linkDetails)
   console.log("saveTabDetails", [tab.id, linkDetails])
   await chrome.storage.local.set({
