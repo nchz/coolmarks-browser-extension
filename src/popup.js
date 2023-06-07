@@ -1,9 +1,9 @@
-import { getBaseUrl } from "./settings.js"
-import { addLink, deleteLink, updateTags, getStatus } from "./modules/core.js"
+import ApiClient from "./modules/core.js"
 import { saveTabDetails, loadTabDetails, saveSessionTags, loadSessionTags } from "./modules/storage.js"
 import { setWait, setError, cleanTagName } from "./modules/helpers.js"
 
-// TODO If !getStatus().authenticated then redirect to login.
+const apiClient = await ApiClient.create()
+// TODO If !apiClient.getStatus().authenticated then redirect to login.
 
 var tab, tabDetails
 
@@ -116,13 +116,13 @@ buttonAddLink.addEventListener("click", async () => {
   const tags = collectTags()
   await saveSessionTags(tags)
   setWait(tab.id)
-  await addLink(url, title, favIconUrl, tags).then(handleOk).catch(handleError)
+  await apiClient.addLink(url, title, favIconUrl, tags).then(handleOk).catch(handleError)
 })
 
 buttonDeleteLink.addEventListener("click", async () => {
   const { linkDetails } = tabDetails
   setWait(tab.id)
-  await deleteLink(linkDetails.id).then(handleOk).catch(handleError)
+  await apiClient.deleteLink(linkDetails.id).then(handleOk).catch(handleError)
 })
 
 buttonUpdateTags.addEventListener("click", async () => {
@@ -130,7 +130,7 @@ buttonUpdateTags.addEventListener("click", async () => {
   const tags = collectTags()
   await saveSessionTags(tags)
   setWait(tab.id)
-  await updateTags(linkDetails.id, tags).then(handleOk).catch(handleError)
+  await apiClient.updateTags(linkDetails.id, tags).then(handleOk).catch(handleError)
 })
 
 // Add a tag using <input>.
@@ -143,4 +143,4 @@ inputAddTag.addEventListener("change", function () {
 })
 
 // Link to dashboard.
-document.getElementById("open-dashboard").setAttribute("href", `${await getBaseUrl()}/api/links/`)
+document.getElementById("open-dashboard").setAttribute("href", `${apiClient.baseUrl}/api/links/`)
